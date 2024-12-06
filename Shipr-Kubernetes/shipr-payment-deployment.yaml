@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipr-payment
+  labels:
+    app: shipr-payment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shipr-payment
+  template:
+    metadata:
+      labels:
+        app: shipr-payment
+    spec:
+      containers:
+      - name: shipr-payment
+        image: osamaazm/test-repo:shipr-payment
+        ports:
+        - containerPort: 8000

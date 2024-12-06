@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipr-frontend
+  labels:
+    app: shipr-frontend
+spec:
+  replicas: {{ .Values.frontend.replicas }}
+  selector:
+    matchLabels:
+      app: shipr-frontend
+  template:
+    metadata:
+      labels:
+        app: shipr-frontend
+    spec:
+      containers:
+      - name: shipr-frontend
+        image: {{ .Values.frontend.image }}
+        ports:
+        - containerPort: 80

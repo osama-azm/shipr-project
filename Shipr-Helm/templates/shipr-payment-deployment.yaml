@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipr-payment
+  labels:
+    app: shipr-payment
+spec:
+  replicas: {{ .Values.payment.replicas }}
+  selector:
+    matchLabels:
+      app: shipr-payment
+  template:
+    metadata:
+      labels:
+        app: shipr-payment
+    spec:
+      containers:
+      - name: shipr-payment
+        image: {{ .Values.payment.image }}
+        ports:
+        - containerPort: 8000

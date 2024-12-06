@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_HUB_REPO = 'osamaazm/test-repo'
+    }
+
+    stages {
+        stage('Pull Images') {
+            steps {
+                script {
+                    // Pull Docker images from Docker Hub
+                    sh '''
+                    docker pull ${DOCKER_HUB_REPO}:shipr-inventory
+                    docker pull ${DOCKER_HUB_REPO}:shipr-payment
+                    docker pull ${DOCKER_HUB_REPO}:shipr-frontend
+                    '''
+                }
+            }
+        }
+
+        stage('Stop Existing Containers') {
+            steps {
+                script {
+                    // Stop and remove any existing containers
+                    sh '''
+                    docker rm -f shipr-inventory || true
+                    docker rm -f shipr-payment || true
+                    docker rm -f shipr-frontend || true
+                    '''
+                }
+            }
+        }
+
+        stage('Run Containers') {
+            steps {
+                script {
+                    // Run the services as Docker containers
+                    sh '''
+                    docker run -d --name shipr-inventory -p 3001:3001 ${DOCKER_HUB_REPO}:shipr-inventory
+                    docker run -d --name shipr-payment -p 3002:3002 ${DOCKER_HUB_REPO}:shipr-payment
+                    docker run -d --name shipr-frontend -p 3000:3000 ${DOCKER_HUB_REPO}:shipr-frontend
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'All services have been successfully deployed locally!'
+        }
+        failure {
+            echo 'Deployment failed. Please check the logs for details.'
+        }
+    }
+}

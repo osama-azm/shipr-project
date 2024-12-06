@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipr-inventory
+  labels:
+    app: shipr-inventory
+spec:
+  replicas: {{ .Values.inventory.replicas }}
+  selector:
+    matchLabels:
+      app: shipr-inventory
+  template:
+    metadata:
+      labels:
+        app: shipr-inventory
+    spec:
+      containers:
+      - name: shipr-inventory
+        image: {{ .Values.inventory.image }}
+        ports:
+        - containerPort: 8000

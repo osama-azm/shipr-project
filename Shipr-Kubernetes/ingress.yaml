@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shipr-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: shipr.local
+    http:
+      paths:
+      - path: /frontend
+        pathType: Prefix
+        backend:
+          service:
+            name: shipr-frontend-service
+            port:
+              number: 80
+      - path: /payment
+        pathType: Prefix
+        backend:
+          service:
+            name: shipr-payment-service
+            port:
+              number: 80
+      - path: /inventory
+        pathType: Prefix
+        backend:
+          service:
+            name: shipr-inventory-service
+            port:
+              number: 80

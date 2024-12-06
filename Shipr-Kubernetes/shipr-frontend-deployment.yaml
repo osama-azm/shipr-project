@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipr-frontend
+  labels:
+    app: shipr-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shipr-frontend
+  template:
+    metadata:
+      labels:
+        app: shipr-frontend
+    spec:
+      containers:
+      - name: shipr-frontend
+        image: osamaazm/test-repo:shipr-frontend
+        ports:
+        - containerPort: 80

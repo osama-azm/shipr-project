@@ -1,0 +1,11 @@
+frontend:
+  image: "osamaazm/test-repo:shipr-frontend"
+  replicas: 2
+
+payment:
+  image: "osamaazm/test-repo:shipr-payment"
+  replicas: 2
+
+inventory:
+  image: "osamaazm/test-repo:shipr-inventory"
+  replicas: 2

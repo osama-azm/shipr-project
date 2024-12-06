@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipr-inventory
+  labels:
+    app: shipr-inventory
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shipr-inventory
+  template:
+    metadata:
+      labels:
+        app: shipr-inventory
+    spec:
+      containers:
+      - name: shipr-inventory
+        image: osamaazm/test-repo:shipr-inventory
+        ports:
+        - containerPort: 8000
